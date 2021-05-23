@@ -10,7 +10,7 @@ class CreditCardWidget extends StatefulWidget {
   final String cardHolderName;
   final String cvvCode;
   final TextStyle textStyle;
-  final Color cardbgColor;
+  final Gradient backgroundGradientColor;
   final bool showBackView;
   final Duration animationDuration;
   final double height;
@@ -27,8 +27,19 @@ class CreditCardWidget extends StatefulWidget {
     this.height,
     this.width,
     this.textStyle,
-    this.cardbgColor = const Color(0xff1b447b),
-
+    this.backgroundGradientColor = const LinearGradient(
+      // Where the linear gradient begins and ends
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
+      // Add one stop for each color. Stops should increase from 0 to 1
+      stops: const [0.1, 0.5, 0.7, 0.9],
+      colors: const [
+        Color(0xff2973d5),
+        Color(0xff428ceb),
+        Color(0xff4a9bef),
+        Color(0xff5aa5f7),
+      ],
+    ),
   })  : assert(cardNumber != null),
         assert(showBackView != null),
         super(key: key);
@@ -42,7 +53,8 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
   AnimationController controller;
   Animation<double> _frontRotation;
   Animation<double> _backRotation;
-  Gradient backgroundGradientColor;
+
+  bool isAmex = false;
 
   @override
   void initState() {
@@ -52,20 +64,6 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
     controller = AnimationController(
       duration: widget.animationDuration,
       vsync: this,
-    );
-
-    backgroundGradientColor = LinearGradient(
-      // Where the linear gradient begins and ends
-      begin: Alignment.topRight,
-      end: Alignment.bottomLeft,
-      // Add one stop for each color. Stops should increase from 0 to 1
-      stops: const [0.1, 0.4, 0.7, 0.9],
-      colors:  [
-        widget.cardbgColor.withOpacity(1),
-        widget.cardbgColor.withOpacity(0.97),
-        widget.cardbgColor.withOpacity(0.90),
-        widget.cardbgColor.withOpacity(0.86),
-      ],
     );
 
     ///Initialize the Front to back rotation tween sequence.
@@ -163,7 +161,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
         boxShadow: [
           BoxShadow(color: Colors.black26, offset: Offset(0, 0), blurRadius: 24)
         ],
-        gradient: backgroundGradientColor,
+        gradient: widget.backgroundGradientColor,
       ),
       margin: const EdgeInsets.all(16),
       width: widget.width ?? width,
@@ -197,13 +195,15 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
                     ),
                   ),
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: Container(
                       color: Colors.white,
                       child: Padding(
                         padding: const EdgeInsets.all(5),
                         child: Text(
-                          widget.cvvCode.isEmpty ? "XXX" : widget.cvvCode,
+                          widget.cvvCode.isEmpty
+                              ? isAmex ? "XXXX" : "XXX"
+                              : widget.cvvCode,
                           maxLines: 1,
                           style: widget.textStyle ?? defaultTextStyle,
                         ),
@@ -259,7 +259,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
         boxShadow: [
           BoxShadow(color: Colors.black26, offset: Offset(0, 0), blurRadius: 24)
         ],
-        gradient: backgroundGradientColor,
+        gradient: widget.backgroundGradientColor,
       ),
       width: width,
       height: orientation == Orientation.portrait ? height / 4 : height / 2,
@@ -407,6 +407,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
           width: 48,
           package: "flutter_credit_card",
         );
+        isAmex = false;
         break;
 
       case CardType.americanExpress:
@@ -416,6 +417,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
           width: 48,
           package: "flutter_credit_card",
         );
+        isAmex = true;
         break;
 
       case CardType.mastercard:
@@ -425,6 +427,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
           width: 48,
           package: "flutter_credit_card",
         );
+        isAmex = false;
         break;
 
       case CardType.discover:
@@ -434,6 +437,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
           width: 48,
           package: "flutter_credit_card",
         );
+        isAmex = false;
         break;
 
       default:
@@ -441,6 +445,8 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
           height: 48,
           width: 48,
         );
+        isAmex = false;
+        break;
     }
 
     return icon;
