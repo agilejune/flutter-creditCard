@@ -28,7 +28,6 @@ class CreditCardWidget extends StatefulWidget {
     this.width,
     this.textStyle,
     this.cardbgColor = const Color(0xff1b447b),
-
   })  : assert(cardNumber != null),
         assert(showBackView != null),
         super(key: key);
@@ -62,7 +61,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       end: Alignment.bottomLeft,
       // Add one stop for each color. Stops should increase from 0 to 1
       stops: const [0.1, 0.4, 0.7, 0.9],
-      colors:  [
+      colors: [
         widget.cardbgColor.withOpacity(1),
         widget.cardbgColor.withOpacity(0.97),
         widget.cardbgColor.withOpacity(0.90),
@@ -110,9 +109,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    Orientation orientation = MediaQuery
-        .of(context)
-        .orientation;
+    Orientation orientation = MediaQuery.of(context).orientation;
 
     ///
     /// If uer adds CVV then toggle the card from front to back..
@@ -142,22 +139,20 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
   ///
   /// Builds a back container containing cvv
   ///
-  Container buildBackContainer(double width,
-      double height,
-      BuildContext context,
-      Orientation orientation,) {
-    var defaultTextStyle = Theme
-        .of(context)
-        .textTheme
-        .title
-        .merge(
-      TextStyle(
-        color: Colors.black,
-        fontFamily: "halter",
-        fontSize: 16,
-        package: "flutter_credit_card",
-      ),
-    );
+  Container buildBackContainer(
+    double width,
+    double height,
+    BuildContext context,
+    Orientation orientation,
+  ) {
+    var defaultTextStyle = Theme.of(context).textTheme.title.merge(
+          TextStyle(
+            color: Colors.black,
+            fontFamily: "halter",
+            fontSize: 16,
+            package: "flutter_credit_card",
+          ),
+        );
 
     return Container(
       decoration: BoxDecoration(
@@ -169,9 +164,8 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
       ),
       margin: const EdgeInsets.all(16),
       width: widget.width ?? width,
-      height: widget.height ?? orientation == Orientation.portrait
-          ? height / 4
-          : height / 2,
+      height: widget.height ??
+          (orientation == Orientation.portrait ? height / 4 : height / 2),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,20 +235,16 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
     double width,
     double height,
     BuildContext context,
-      Orientation orientation,
+    Orientation orientation,
   ) {
-    var defaultTextStyle = Theme
-        .of(context)
-        .textTheme
-        .title
-        .merge(
-      TextStyle(
-        color: Colors.white,
-        fontFamily: "halter",
-        fontSize: 16,
-        package: "flutter_credit_card",
-      ),
-    );
+    var defaultTextStyle = Theme.of(context).textTheme.title.merge(
+          TextStyle(
+            color: Colors.white,
+            fontFamily: "halter",
+            fontSize: 16,
+            package: "flutter_credit_card",
+          ),
+        );
 
     return Container(
       margin: const EdgeInsets.all(16),
@@ -265,8 +255,9 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
         ],
         gradient: backgroundGradientColor,
       ),
-      width: width,
-      height: orientation == Orientation.portrait ? height / 4 : height / 2,
+      width: widget.width ?? width,
+      height: widget.height ??
+          (orientation == Orientation.portrait ? height / 4 : height / 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -304,9 +295,7 @@ class _CreditCardWidgetState extends State<CreditCardWidget>
             child: Padding(
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: Text(
-                widget.cardHolderName.isEmpty ||
-                    widget.cardHolderName == null ||
-                    !RegExp(r'[a-zA-Z]').hasMatch(widget.cardHolderName)
+                widget.cardHolderName.isEmpty || widget.cardHolderName == null
                     ? "CARD HOLDER"
                     : widget.cardHolderName,
                 maxLines: 1,
