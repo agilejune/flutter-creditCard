@@ -6,9 +6,7 @@ A Flutter package allows you to easily implement the Credit card's UI easily wit
 
 ## Preview
 
-<p>
-    <img src="./preview/preview.gif" height="400" alt="Screenshot" raw="true"/>
-</p>
+![The example app running in Android](https://github.com/simformsolutions/flutter_credit_card/blob/master/preview/preview.gif)
 
 ## Installing
 
@@ -18,7 +16,7 @@ A Flutter package allows you to easily implement the Credit card's UI easily wit
     
 ```dart
 dependencies:
-    flutter_credit_card: 0.1.0
+    flutter_credit_card: 0.1.1
 ```
 
 2.  Import the package
@@ -30,7 +28,6 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 
 *With required parameters*
     
-    ```dart
     CreditCardWidget(
         cardNumber: cardNumber,
         expiryDate: expiryDate, 
@@ -38,11 +35,9 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
         cvvCode: cvvCode,
         showBackView: isCvvFocused, //true when you want to show cvv(back) view
     ),
-    ```
     
 *With optional parameters*
    
-    ```dart
     CreditCardWidget(
         cardNumber: cardNumber,
         expiryDate: expiryDate,
@@ -55,7 +50,6 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
         width: MediaQuery.of(context).size.width,
         animationDuration: Duration(milliseconds: 1000),
         ),
-    ```
 
 ## How to use
 Check out the **example** app in the [example](example) directory or the 'Example' tab on pub.dartlang.org for a more complete example.
