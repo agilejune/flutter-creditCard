@@ -1,5 +1,6 @@
 ## 0.1.2
-*   Lint warning fixes
+*   Added CreditCard with Form Widget `CreditCardForm`.
+*   Bug and Lint check fixes
 
 ## 0.1.1
 *   Code Improvements
